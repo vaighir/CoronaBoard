@@ -7,7 +7,10 @@ x-flask: &flask
   NAMEFLASK: value
 
 x-db: &db
-  NAMEDB: value
+  MYSQL_ROOT_PASSWORD: root_password
+  MYSQL_DATABASE: database
+  MYSQL_USER: user
+  MYSQL_PASSWORD: password
 
 services:
   flask:
@@ -20,4 +23,20 @@ services:
     ports:
       - 5000:5000
     volumes:
-      - ${WORKDIR}/../src/flask:/app/
+      - ./src/flask:/app/
+
+  db:
+    image: mysql:8.0.19
+    hostname: 'db'
+    restart: always
+    environment:
+      <<: *globals
+      <<: *db
+    ports:
+      - 3307:3306
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./src/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  db_data:
