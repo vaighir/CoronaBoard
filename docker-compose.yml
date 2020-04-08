@@ -19,16 +19,5 @@ services:
       <<: *flask
     ports:
       - 5000:5000
-
-  db:
-    image:
-    hostname: db
-    restart: always
-    environment:
-      <<: *globals
-      <<: *db
     volumes:
-      - db-volume:/path/
-
-volumes:
-  db-volume:
+      - ${WORKDIR}/../src/flask:/app/
