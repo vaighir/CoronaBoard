@@ -1,0 +1,34 @@
+version: '3.4'
+
+x-globals: &globals
+  NAME: value
+
+x-flask: &flask
+  NAMEFLASK: value
+
+x-db: &db
+  NAMEDB: value
+
+services:
+  flask:
+    build: ./src/flask_app
+    hostname: 'flask'
+    restart: always
+    environment:
+      <<: *globals
+      <<: *flask
+    ports:
+      - 5000:5000
+
+  db:
+    image:
+    hostname: db
+    restart: always
+    environment:
+      <<: *globals
+      <<: *db
+    volumes:
+      - db-volume:/path/
+
+volumes:
+  db-volume:
