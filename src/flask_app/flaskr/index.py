@@ -7,4 +7,5 @@ bp = Blueprint('index', __name__, url_prefix='/')
 @bp.route('/', methods=["GET"])
 def index():
     name = "Tester"
-    return render_template("index.html", name=name)
+    posts = ["First", "Second", "Third", "Fourth"]
+    return render_template("index.html", name=name, posts=posts)
