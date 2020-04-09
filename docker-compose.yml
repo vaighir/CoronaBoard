@@ -1,16 +1,16 @@
 version: '3.4'
 
 x-globals: &globals
-  NAME: value
-
-x-flask: &flask
-  NAMEFLASK: value
-
-x-db: &db
-  MYSQL_ROOT_PASSWORD: root_password
   MYSQL_DATABASE: corona
   MYSQL_USER: user
   MYSQL_PASSWORD: password
+
+x-flask: &flask
+  FLASK_APP: flaskr
+  FLASK_ENV: development
+
+x-db: &db
+  MYSQL_ROOT_PASSWORD: root_password
 
 services:
   flask:
@@ -23,7 +23,7 @@ services:
     ports:
       - 5000:5000
     volumes:
-      - ./src/flask:/app/
+      - ./src/flask_app:/app/
 
   db:
     image: mysql:8.0.19

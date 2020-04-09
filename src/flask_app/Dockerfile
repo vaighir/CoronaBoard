@@ -4,9 +4,6 @@ ENV WORKDIR='/app'
 COPY . /app
 WORKDIR $WORKDIR
 
-ENV FLASK_APP=flaskr \
-    FLASK_ENV=development
-
 RUN apk update && apk upgrade && \
     apk add bash bash-completion python3 python3-dev vim && \
     pip3 install --upgrade pip && \
