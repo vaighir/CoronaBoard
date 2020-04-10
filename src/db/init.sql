@@ -16,6 +16,7 @@ CREATE TABLE post (
   id INT AUTO_INCREMENT,
   user_id INT,
   title VARCHAR(255),
+  category VARCHAR(255),
   description TEXT,
   created DATE,
   edited BOOLEAN NOT NULL DEFAULT 0,
