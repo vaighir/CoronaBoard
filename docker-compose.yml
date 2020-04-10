@@ -4,6 +4,8 @@ x-globals: &globals
   MYSQL_DATABASE: corona
   MYSQL_USER: user
   MYSQL_PASSWORD: password
+  MYSQL_HOSTNAME: db
+  MYSQL_PORT: 3306
 
 x-flask: &flask
   FLASK_APP: flaskr
