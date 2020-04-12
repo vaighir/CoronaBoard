@@ -1,7 +1,7 @@
 DROP DATABASE IF EXISTS corona;
 
-create database corona;
-use corona;
+CREATE DATABASE corona;
+USE corona;
 
 CREATE TABLE user (
   id INT AUTO_INCREMENT,
@@ -40,3 +40,9 @@ CREATE TABLE comment (
     REFERENCES post(id)
     ON DELETE CASCADE
 );
+
+INSERT INTO user (username, email, role, password)
+VALUES ("admin", "admin@sample.com", "admin", "password");
+
+INSERT INTO user (username, email, role, password)
+VALUES ("user1", "user1@sample.com", "user", "password");
