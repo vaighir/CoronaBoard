@@ -32,13 +32,40 @@ def get_user_by_id(user_id):
     return user
 
 
-def create_user(user):
-    yield
+def insert_user(user):
+    mydb, cursor = db_connector.connect()
+    query = """INSERT INTO user (username, email, role, password)
+               VALUES (%s,%s,%s,%s)"""
+    cursor.execute(
+                query, (user.username, user.email, user.role, user.password))
+    mydb.commit()
+    cursor.close()
+    mydb.close()
 
 
-def update_user(user):
-    yield
+def update_user_email(user):
+    mydb, cursor = db_connector.connect()
+    query = """UPDATE user set email = %s WHERE id = %s"""
+    cursor.execute(query, (user.email, user.id))
+    mydb.commit()
+    cursor.close()
+    mydb.close()
+
+
+def update_user_password(user):
+    mydb, cursor = db_connector.connect()
+    query = """UPDATE user set password = %s WHERE id = %s"""
+    cursor.execute(query, (user.password, user.id))
+    mydb.commit()
+    cursor.close()
+    mydb.close()
 
 
 def delete_user(user):
-    yield
+    mydb, cursor = db_connector.connect()
+    query = """DELETE FROM user WHERE id = %s"""
+    cursor.execute(
+                query, (user.id,))
+    mydb.commit()
+    cursor.close()
+    mydb.close()

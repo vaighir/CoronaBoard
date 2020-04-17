@@ -4,7 +4,10 @@
 class User:
 
     id = 0
+    username = ""
     role = "user"
+    password = ""
+    email = ""
 
     def __init__(self, username, email):
         self.username = username
