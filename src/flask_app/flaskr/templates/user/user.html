@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}{{ user['username'] }}{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <h6>{{ user['username'] }}'s posts</h6>
+    <div class="row">
+      {% for post in posts %}
+        <div class="col-sm-4">{{ post }}</div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}

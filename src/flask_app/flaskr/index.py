@@ -9,3 +9,8 @@ def index():
     name = "Tester"
     posts = ["First", "Second", "Third", "Fourth"]
     return render_template("index.html", name=name, posts=posts)
+
+
+@bp.route('/test', methods=["GET"])
+def error():
+    return render_template("errors/404.html")

@@ -15,39 +15,3 @@ def connect():
         database=db_name)
     cursor = mydb.cursor(prepared=True)
     return mydb, cursor
-
-
-def get_posts():
-    yield
-
-
-def get_post_by_id(post_id):
-    yield
-
-
-def get_posts_by_user_id(user_id):
-    yield
-
-
-def create_post(post):
-    yield
-
-
-def update_post(post):
-    yield
-
-
-def delete_post(post):
-    yield
-
-
-def get_comments_by_post_id(post_id):
-    yield
-
-
-def create_comment(comment):
-    yield
-
-
-def delete_comment(comment):
-    yield

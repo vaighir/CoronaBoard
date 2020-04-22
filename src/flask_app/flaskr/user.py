@@ -2,16 +2,14 @@
 
 
 class User:
-
     id = 0
     username = ""
-    role = "user"
-    password = ""
     email = ""
+    role = ""
+    password = ""
 
-    def __init__(self, username, email):
-        self.username = username
-        self.email = email
+    def __init__(self):
+        self.role = "user"
 
     def set_password(password):
         yield

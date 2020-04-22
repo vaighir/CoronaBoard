@@ -1,14 +1,29 @@
 #!/usr/bin/env python3
-import db_connector
+from . import db_connector
+from . import user
+
+
+def parse_mysql_response(mysql_response):
+    u = user.User()
+    u.id = mysql_response[0][0]
+    u.username = mysql_response[0][1]
+    u.email = mysql_response[0][2]
+    u.role = mysql_response[0][3]
+    u.password = mysql_response[0][4]
+    return u
 
 
 def get_users():
     mydb, cursor = db_connector.connect()
     query = """SELECT * FROM user"""
     cursor.execute(query)
-    users = cursor.fetchall()
+    mysql_response = cursor.fetchall()
     cursor.close()
     mydb.close()
+    users = set()
+    for response in mysql_response():
+        u = parse_mysql_response(response)
+        users.add(u)
     return users
 
 
@@ -16,7 +31,9 @@ def get_user_by_username(username):
     mydb, cursor = db_connector.connect()
     query = """SELECT * FROM user where username = %s"""
     cursor.execute(query, (username,))
-    user = cursor.fetchall()
+    mysql_response = cursor.fetchall()
+    # if not mysql_response: // if mysql response is an empty list
+    user = parse_mysql_response(mysql_response)
     cursor.close()
     mydb.close()
     return user
@@ -26,7 +43,8 @@ def get_user_by_id(user_id):
     mydb, cursor = db_connector.connect()
     query = """SELECT * FROM user where id = %s"""
     cursor.execute(query, (user_id,))
-    user = cursor.fetchall()
+    mysql_response = cursor.fetchall()
+    user = parse_mysql_response(mysql_response)
     cursor.close()
     mydb.close()
     return user
