@@ -21,9 +21,9 @@ def get_users():
     cursor.close()
     mydb.close()
     users = set()
-    for response in mysql_response():
-        u = parse_mysql_response(response)
-        users.add(u)
+    for response in mysql_response:
+        id = response[0]
+        users.add(get_user_by_id(id))
     return users
 
 
@@ -32,7 +32,8 @@ def get_user_by_username(username):
     query = """SELECT * FROM user where username = %s"""
     cursor.execute(query, (username,))
     mysql_response = cursor.fetchall()
-    # if not mysql_response: // if mysql response is an empty list
+    if not mysql_response:
+        return None
     user = parse_mysql_response(mysql_response)
     cursor.close()
     mydb.close()
@@ -44,6 +45,8 @@ def get_user_by_id(user_id):
     query = """SELECT * FROM user where id = %s"""
     cursor.execute(query, (user_id,))
     mysql_response = cursor.fetchall()
+    if not mysql_response:
+        return None
     user = parse_mysql_response(mysql_response)
     cursor.close()
     mydb.close()

@@ -29,7 +29,8 @@ def create_app(test_config=None):
     def hello():
         return 'Hello, World!'
 
-    from . import index, user_blueprint
+    from . import index
+    from . import user_blueprint
     app.register_blueprint(index.bp)
     app.register_blueprint(user_blueprint.bp)
 

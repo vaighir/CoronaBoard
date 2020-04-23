@@ -5,6 +5,12 @@
 {% endblock %}
 
 {% block content %}
+  {% if edit_rights %}
+    <p>Edit user<p>
+  {% endif %}
+  {% if delete_rights %}
+    <p>Delete user<p>
+  {% endif %}
   <div class="container">
     <h6>{{ user['username'] }}'s posts</h6>
     <div class="row">
