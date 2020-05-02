@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Delete {{ user['username'] }}{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<p>Are you sure you want to delete {{ user['username'] }}?</p>
+<form method="post">
+  <input type="hidden" id="delete_id" name="delete_id" value="{{ user['id'] }}">
+  <button type="submit" value="Submit"">Yes, delete {{ user['username'] }}</button>
+</form>
+<a href="{{ url_for('index.index') }}"><button>Cancel</button></a>
+{% endblock %}
