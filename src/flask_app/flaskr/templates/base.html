@@ -1,11 +1,14 @@
 <!doctype html>
 <head>
-  <title>Index</title>
+  <title>Coronaboard</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <nav class="navbar">
-  <h1><a href="{{ url_for('index.index') }}">Home</a></h1>
+  <h1><a href="{{ url_for('index.index') }}">Coronaboard</a></h1>
+  {% if g.user %}
+  <a href="{{ url_for('post_blueprint.create') }}"><button>Create new post</button></a>
+  {% endif %}
   <ul>
     {% if g.user %}
       <li>You're logged in as <a href="{{ url_for('user_blueprint.show_user') }}">{{ g.user['username'] }}</a>

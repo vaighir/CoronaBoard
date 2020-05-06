@@ -31,7 +31,9 @@ def create_app(test_config=None):
 
     from . import index
     from . import user_blueprint
+    from. import post_blueprint
     app.register_blueprint(index.bp)
     app.register_blueprint(user_blueprint.bp)
+    app.register_blueprint(post_blueprint.bp)
 
     return app

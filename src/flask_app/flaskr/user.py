@@ -10,9 +10,3 @@ class User:
 
     def __init__(self):
         self.role = "user"
-
-    def set_password(password):
-        yield
-
-    def check_password(password):
-        yield

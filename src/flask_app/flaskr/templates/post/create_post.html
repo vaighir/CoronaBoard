@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Create a new post{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <form method="post">
+    <label for="Title">Title</label><br>
+    <input name="title" id="title" required>
+    <br>
+    <label for="category">Category</label><br>
+    <select id="category" name="category">
+      <option selected disabled hidden style='display: none' value=''></option>
+      <option value="groceries">Groceries</option>
+      <option value="dogs">Dog walking</option>
+    </select>
+    <br>
+    <label for="description">Description</label><br>
+    <textarea id="description" name="description" rows="4" cols="50" required>
+    </textarea>
+    <br>
+    <input type="submit" value="Post">
+  </form>
+</div>
+{% endblock %}

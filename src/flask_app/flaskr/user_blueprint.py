@@ -5,6 +5,7 @@ from flask import (
     )
 from werkzeug.security import check_password_hash, generate_password_hash
 from . import db_user_helper, user
+from . import db_post_helper, post
 from mysql.connector import Error as mysql_error
 
 
@@ -56,11 +57,13 @@ def show_user():
 
     user = db_user_helper.get_user_by_id(viewed_user_id)
 
+    posts = db_post_helper.get_posts_by_user_id(viewed_user_id)
+
     delete_rights = (logged_user_id == 1)
     edit_rights = (logged_user_id == 1 or logged_user_id == viewed_user_id)
 
     return render_template(
-                            "user/user.html", user=user,
+                            "user/user.html", user=user, posts=posts,
                             edit_rights=edit_rights,
                             delete_rights=delete_rights)
 

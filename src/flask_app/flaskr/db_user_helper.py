@@ -5,11 +5,11 @@ from . import user
 
 def parse_mysql_response(mysql_response):
     u = user.User()
-    u.id = mysql_response[0][0]
-    u.username = mysql_response[0][1]
-    u.email = mysql_response[0][2]
-    u.role = mysql_response[0][3]
-    u.password = mysql_response[0][4]
+    u.id = mysql_response[0]
+    u.username = mysql_response[1]
+    u.email = mysql_response[2]
+    u.role = mysql_response[3]
+    u.password = mysql_response[4]
     return u
 
 
@@ -17,13 +17,14 @@ def get_users():
     mydb, cursor = db_connector.connect()
     query = """SELECT * FROM user"""
     cursor.execute(query)
-    mysql_response = cursor.fetchall()
+    users = []
+    mysql_response = cursor.fetchone()
+    while mysql_response:
+        u = parse_mysql_response(mysql_response)
+        users.append(u)
+        mysql_response = cursor.fetchone()
     cursor.close()
     mydb.close()
-    users = set()
-    for response in mysql_response:
-        id = response[0]
-        users.add(get_user_by_id(id))
     return users
 
 
@@ -31,7 +32,7 @@ def get_user_by_username(username):
     mydb, cursor = db_connector.connect()
     query = """SELECT * FROM user where username = %s"""
     cursor.execute(query, (username,))
-    mysql_response = cursor.fetchall()
+    mysql_response = cursor.fetchone()
     if not mysql_response:
         return None
     user = parse_mysql_response(mysql_response)
@@ -44,7 +45,7 @@ def get_user_by_id(user_id):
     mydb, cursor = db_connector.connect()
     query = """SELECT * FROM user where id = %s"""
     cursor.execute(query, (user_id,))
-    mysql_response = cursor.fetchall()
+    mysql_response = cursor.fetchone()
     if not mysql_response:
         return None
     user = parse_mysql_response(mysql_response)
