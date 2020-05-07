@@ -18,7 +18,7 @@ CREATE TABLE post (
   title VARCHAR(255),
   category VARCHAR(255),
   description TEXT,
-  created DATE,
+  created DATETIME,
   edited BOOLEAN NOT NULL DEFAULT 0,
   PRIMARY KEY (id),
   FOREIGN KEY (user_id)
@@ -31,7 +31,7 @@ CREATE TABLE comment (
   user_id INT,
   post_id INT,
   description TEXT,
-  created DATE,
+  created DATETIME,
   PRIMARY KEY (id),
   FOREIGN KEY (user_id)
     REFERENCES user(id)
