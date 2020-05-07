@@ -16,14 +16,15 @@ bp = Blueprint('user_blueprint', __name__, url_prefix='/')
 @bp.route('/users', methods=('GET', 'POST'))
 def show_users():
     auth.login_required()
-    if g.user.role != "admin":
-        error = "Only admin can view all users"
-        flash(error)
-        return redirect(url_for('index.index'))
 
     if request.method == 'POST':
         session['viewed_user_id'] = request.form['id']
         return redirect(url_for('user_blueprint.show_user'))
+
+    if g.user.role != "admin":
+        error = "Only admin can view all users"
+        flash(error)
+        return redirect(url_for('index.index'))
 
     users = db_user_helper.get_users()
     return render_template("user/users.html", users=users)
@@ -31,8 +32,7 @@ def show_users():
 
 @bp.route('/user', methods=('GET', 'POST'))
 def show_user():
-    auth.login_required()
-    logged_user_id = g.user.id
+    logged_user_id = auth.login_required()
 
     if request.method == 'POST':
         user_to_delete = int(request.form['delete_id'])
@@ -103,9 +103,7 @@ def register():
 @bp.route('/edituser', methods=('GET', 'POST'))
 def edit():
 
-    auth.login_required()
-
-    logged_user_id = g.user.id
+    logged_user_id = auth.login_required()
     edit_user_id = int(session.get('user_to_edit'))
 
     if logged_user_id != 1 and logged_user_id != edit_user_id:
@@ -193,6 +191,6 @@ def delete():
 
 def clean_up_session():
     if session.get('user_to_edit'):
-        session.pop('user_to_delete')
+        session.pop('user_to_edit')
     elif session.get('user_to_delete'):
         session.pop('user_to_delete')

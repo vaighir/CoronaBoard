@@ -4,6 +4,7 @@ from flask import (
     url_for, flash, g
     )
 from . import db_comment_helper, comment
+from. import auth
 from mysql.connector import Error as mysql_error
 import datetime
 
@@ -14,12 +15,7 @@ bp = Blueprint('comment_blueprint', __name__, url_prefix='/comment')
 @bp.route('/show/<int:comment_id>', methods=('GET', 'POST'))
 def show_post(comment_id):
 
-    if session.get('user_id'):
-        logged_user_id = int(session['user_id'])
-    else:
-        error = "You have to log in"
-        flash(error)
-        return redirect(url_for('index.index'))
+    logged_user_id = auth.login_required()
 
     if request.method == 'POST':
         session['comment_to_delete'] = request.form['delete_id']
@@ -36,12 +32,7 @@ def show_post(comment_id):
 @bp.route('/<int:post_id>/create', methods=('GET', 'POST'))
 def create(post_id):
 
-    if session.get('user_id'):
-        logged_user_id = int(session['user_id'])
-    else:
-        error = "You have to log in"
-        flash(error)
-        return redirect(url_for('index.index'))
+    logged_user_id = auth.login_required()
 
     if request.method == 'POST':
         description = request.form['description']
@@ -73,9 +64,9 @@ def create(post_id):
 @bp.route('/delete', methods=('GET', 'POST'))
 def delete():
 
-    if session.get('user_id') == 1:
-        pass
-    else:
+    auth.login_required()
+
+    if g.user.role != "admin":
         error = "Only the admin can delete posts"
         flash(error)
         return redirect(url_for('index.index'))

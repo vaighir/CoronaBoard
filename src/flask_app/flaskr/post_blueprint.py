@@ -5,6 +5,7 @@ from flask import (
     )
 from . import db_post_helper, post
 from . import db_comment_helper, comment
+from . import auth
 from mysql.connector import Error as mysql_error
 import datetime
 
@@ -15,12 +16,7 @@ bp = Blueprint('post_blueprint', __name__, url_prefix='/post')
 @bp.route('/<int:post_id>', methods=('GET', 'POST'))
 def show_post(post_id):
 
-    if session.get('user_id'):
-        logged_user_id = int(session['user_id'])
-    else:
-        error = "You have to log in"
-        flash(error)
-        return redirect(url_for('index.index'))
+    logged_user_id = auth.login_required()
 
     if request.method == 'POST':
         post_to_delete = int(request.form['delete_id'])
@@ -47,12 +43,7 @@ def show_post(post_id):
 @bp.route('/create', methods=('GET', 'POST'))
 def create():
 
-    if session.get('user_id'):
-        logged_user_id = int(session['user_id'])
-    else:
-        error = "You have to log in"
-        flash(error)
-        return redirect(url_for('index.index'))
+    logged_user_id = auth.login_required()
 
     if request.method == 'POST':
         title = request.form['title']
@@ -92,12 +83,7 @@ def create():
 @bp.route('/edit', methods=('GET', 'POST'))
 def edit():
 
-    if session.get('user_id'):
-        logged_user_id = int(session['user_id'])
-    else:
-        error = "You have to log in"
-        flash(error)
-        return redirect(url_for('index.index'))
+    logged_user_id = auth.login_required()
 
     p = db_post_helper.get_post_by_id(session.get('post_to_edit'))
 
@@ -133,9 +119,9 @@ def edit():
 @bp.route('/delete', methods=('GET', 'POST'))
 def delete():
 
-    if session.get('user_id') == 1:
-        pass
-    else:
+    auth.login_required()
+
+    if g.user.role != "admin":
         error = "Only the admin can delete posts"
         flash(error)
         return redirect(url_for('index.index'))
@@ -158,3 +144,10 @@ def delete():
     p = db_post_helper.get_post_by_id(session.get('post_to_delete'))
 
     return render_template("post/delete_post.html", post=p)
+
+
+def clean_up_session():
+    if session.get('post_to_edit'):
+        session.pop('post_to_edit')
+    elif session.get('post_to_delete'):
+        session.pop('post_to_delete')

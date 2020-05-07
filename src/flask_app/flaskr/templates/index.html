@@ -9,17 +9,19 @@
   <div class="row">
     {% for post in posts %}
       <div class="col-sm-4">
-        <form method="post">
+
           <h3><a href='/post/{{ post['id'] }}'>{{ post['title'] }}</a></h3><br>
           {{ post['description']}}<br>
           <i><small>created {{ post['created'] }} by
-              <input type="hidden" id="author_id" name="author_id" value="{{ post['author_id'] }}">
+            <form action="/users" method="post">
+              <input type="hidden" id="id" name="id" value="{{ post['author_id'] }}">
               <button type="submit" value="Submit"">{{ post['author']['username'] }}</button>
+            </form>
           </small></i><br>
           {% if post['edited'] %}
             edited<br>
           {% endif %}
-        </form>
+
       </div>
     {% endfor %}
   </div>

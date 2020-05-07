@@ -62,3 +62,6 @@ def login_required():
         error = "You have to log in"
         flash(error)
         return redirect(url_for('index.index'))
+    else:
+        logged_user_id = g.user.id
+        return logged_user_id
