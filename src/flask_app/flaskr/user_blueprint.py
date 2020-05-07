@@ -54,8 +54,8 @@ def show_user():
     user = db_user_helper.get_user_by_id(viewed_user_id)
     posts = db_post_helper.get_posts_by_user_id(viewed_user_id)
 
-    delete_rights = (logged_user_id == 1)
-    edit_rights = (logged_user_id == 1 or logged_user_id == viewed_user_id)
+    delete_rights = (g.user.role == "admin")
+    edit_rights = (g.user.role == "admin" or int(logged_user_id) == int(viewed_user_id))
 
     return render_template(
                             "user/user.html", user=user, posts=posts,
@@ -106,7 +106,7 @@ def edit():
     logged_user_id = auth.login_required()
     edit_user_id = int(session.get('user_to_edit'))
 
-    if logged_user_id != 1 and logged_user_id != edit_user_id:
+    if g.user.role != "admin" and logged_user_id != edit_user_id:
         error = "You do not have rights to edit this user"
         flash(error)
         session.pop('user_to_edit')

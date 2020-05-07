@@ -29,8 +29,14 @@
         {% if post['category']=='dogs' %}Dog walking{% endif %}
         <br>
         {{ post['description']}}<br>
-        <i><small>created {{ post['created'] }} by {{ post['author']['username'] }}
+        <div class="row">
+        <i><small>created {{ post['created'] }} by
+          <form action="/users" method="post">
+            <input type="hidden" id="id" name="id" value="{{ post['author_id'] }}">
+            <button type="submit" value="Submit"">{{ post['author']['username'] }}</button>
+          </form>
         </small></i><br>
+        </div>
         {% if post['edited'] %}
           edited<br>
         {% endif %}
@@ -40,7 +46,10 @@
         <br>
         {% for comment in comments %}
           <a href='/comment/show/{{ comment['id'] }}'>{{ comment['description'] }}</a><br>
-          <i><small>created {{ comment['created'] }} by {{ post['author']['username'] }}
+          <i><small>created {{ comment['created'] }} by <form action="/users" method="post">
+            <input type="hidden" id="id" name="id" value="{{ comment['author_id'] }}">
+            <button type="submit" value="Submit"">{{ comment['author']['username'] }}</button>
+          </form>
           </small></i><br>
         {% endfor %}
 </div>
