@@ -34,5 +34,14 @@
         {% if post['edited'] %}
           edited<br>
         {% endif %}
+        <a href="/comment/{{ post['id'] }}/create">Comment</a>
+        <br>
+        Comments
+        <br>
+        {% for comment in comments %}
+          <a href='/comment/show/{{ comment['id'] }}'>{{ comment['description'] }}</a><br>
+          <i><small>created {{ comment['created'] }} by {{ post['author']['username'] }}
+          </small></i><br>
+        {% endfor %}
 </div>
 {% endblock %}

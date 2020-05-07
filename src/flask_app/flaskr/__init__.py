@@ -25,15 +25,13 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    @app.route('/hello')
-    def hello():
-        return 'Hello, World!'
-
     from . import index
     from . import user_blueprint
-    from. import post_blueprint
+    from . import post_blueprint
+    from . import comment_blueprint
     app.register_blueprint(index.bp)
     app.register_blueprint(user_blueprint.bp)
     app.register_blueprint(post_blueprint.bp)
+    app.register_blueprint(comment_blueprint.bp)
 
     return app

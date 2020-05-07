@@ -4,6 +4,7 @@ from flask import (
     url_for, flash, g
     )
 from . import db_post_helper, post
+from . import db_comment_helper, comment
 from mysql.connector import Error as mysql_error
 import datetime
 
@@ -32,12 +33,13 @@ def show_post(post_id):
             return redirect(url_for('post_blueprint.edit'))
 
     post = db_post_helper.get_post_by_id(post_id)
+    comments = db_comment_helper.get_comments_by_post_id(post_id)
 
     delete_rights = (logged_user_id == 1)
     edit_rights = (logged_user_id == 1 or logged_user_id == int(post.author_id))
 
     return render_template(
-                            "post/post.html", post=post,
+                            "post/post.html", post=post, comments=comments,
                             edit_rights=edit_rights,
                             delete_rights=delete_rights)
 

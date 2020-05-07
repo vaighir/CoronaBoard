@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  {% block title %}{% endblock %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+        <h3>Comment to {{ comment['post_title'] }}</h3>
+        <div class="row">
+        {% if delete_rights %}
+        <form method="post">
+          <input type="hidden" id="delete_id" name="delete_id" value="{{ comment['id'] }}">
+          <button type="submit" value="Submit"">Delete</button>
+        </form>
+        <br>
+        {% endif %}
+        </div>
+        {{ comment['description']}}<br>
+        <i><small>created {{ comment['created'] }} by {{ comment['author']['username'] }}
+        </small></i><br>
+</div>
+{% endblock %}
