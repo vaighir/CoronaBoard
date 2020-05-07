@@ -29,9 +29,11 @@ def create_app(test_config=None):
     from . import user_blueprint
     from . import post_blueprint
     from . import comment_blueprint
+    from . import auth
     app.register_blueprint(index.bp)
     app.register_blueprint(user_blueprint.bp)
     app.register_blueprint(post_blueprint.bp)
     app.register_blueprint(comment_blueprint.bp)
+    app.register_blueprint(auth.bp)
 
     return app

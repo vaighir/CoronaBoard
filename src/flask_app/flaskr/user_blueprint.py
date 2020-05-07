@@ -6,6 +6,7 @@ from flask import (
 from werkzeug.security import check_password_hash, generate_password_hash
 from . import db_user_helper, user
 from . import db_post_helper, post
+from . import auth
 from mysql.connector import Error as mysql_error
 
 
@@ -14,9 +15,9 @@ bp = Blueprint('user_blueprint', __name__, url_prefix='/')
 
 @bp.route('/users', methods=('GET', 'POST'))
 def show_users():
-
-    if not session.get('user_id'):
-        error = "You have to log in"
+    auth.login_required()
+    if g.user.role != "admin":
+        error = "Only admin can view all users"
         flash(error)
         return redirect(url_for('index.index'))
 
@@ -30,13 +31,8 @@ def show_users():
 
 @bp.route('/user', methods=('GET', 'POST'))
 def show_user():
-
-    if session.get('user_id'):
-        logged_user_id = int(session['user_id'])
-    else:
-        error = "You have to log in"
-        flash(error)
-        return redirect(url_for('index.index'))
+    auth.login_required()
+    logged_user_id = g.user.id
 
     if request.method == 'POST':
         user_to_delete = int(request.form['delete_id'])
@@ -56,7 +52,6 @@ def show_user():
         viewed_user_id = logged_user_id
 
     user = db_user_helper.get_user_by_id(viewed_user_id)
-
     posts = db_post_helper.get_posts_by_user_id(viewed_user_id)
 
     delete_rights = (logged_user_id == 1)
@@ -96,7 +91,7 @@ def register():
 
             try:
                 db_user_helper.insert_user(u)
-                return redirect(url_for('user_blueprint.login'))
+                return redirect(url_for('auth.login'))
             except mysql_error:
                 error = "A user with this email address is already registered."
 
@@ -108,13 +103,9 @@ def register():
 @bp.route('/edituser', methods=('GET', 'POST'))
 def edit():
 
-    if session.get('user_id'):
-        logged_user_id = int(session['user_id'])
-    else:
-        error = "You have to log in"
-        flash(error)
-        return redirect(url_for('index.index'))
+    auth.login_required()
 
+    logged_user_id = g.user.id
     edit_user_id = int(session.get('user_to_edit'))
 
     if logged_user_id != 1 and logged_user_id != edit_user_id:
@@ -172,10 +163,10 @@ def edit():
 @bp.route('/deleteuser', methods=('GET', 'POST'))
 def delete():
 
-    if session.get('user_id') == 1:
-        pass
-    else:
-        error = "You have to log in"
+    auth.login_required()
+    if not g.user.role == "admin":
+        error = "Only the admin can delete users"
+        clean_up_session()
         flash(error)
         return redirect(url_for('index.index'))
 
@@ -185,14 +176,13 @@ def delete():
 
         try:
             db_user_helper.delete_user(u)
-            session.pop('user_to_delete')
             message = "User deleted"
             flash(message)
         except mysql_error:
-            session.pop('user_to_delete')
             error = "Oops, something went wrong with the database request"
             flash(error)
 
+        clean_up_session()
         return redirect(url_for('index.index'))
 
     delete_user_id = session.get('user_to_delete')
@@ -201,39 +191,8 @@ def delete():
     return render_template("user/delete_user.html", user=u)
 
 
-@bp.route('/login', methods=('GET', 'POST'))
-def login():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        error = None
-        user = db_user_helper.get_user_by_username(username)
-
-        if user is None:
-            error = 'Incorrect username.'
-        elif not check_password_hash(user.password, password):
-            error = 'Incorrect password.'
-
-        if error is None:
-            session.clear()
-            session['user_id'] = user.id
-            return redirect(url_for('index.index'))
-
-        flash(error)
-    return render_template("user/login.html")
-
-
-@bp.route('/logout')
-def logout():
-    session.clear()
-    return redirect(url_for('index.index'))
-
-
-@bp.before_app_request
-def load_logged_in_user():
-    user_id = session.get('user_id')
-
-    if user_id is None:
-        g.user = None
-    else:
-        g.user = db_user_helper.get_user_by_id(user_id)
+def clean_up_session():
+    if session.get('user_to_edit'):
+        session.pop('user_to_delete')
+    elif session.get('user_to_delete'):
+        session.pop('user_to_delete')
