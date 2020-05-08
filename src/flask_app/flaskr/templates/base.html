@@ -3,6 +3,8 @@
   <title>Coronaboard</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script type=text/javascript src="{{ url_for('static', filename='scripts/script.js') }}"></script>
 </head>
 <nav class="navbar">
   <h1><a href="{{ url_for('index.index') }}">Coronaboard</a></h1>
@@ -31,3 +33,6 @@
   {% endfor %}
   {% block content %}{% endblock %}
 </section>
+<p>If you click on me, I will disappear.</p>
+<p>Click me away!</p>
+<p>Click me too!</p>
