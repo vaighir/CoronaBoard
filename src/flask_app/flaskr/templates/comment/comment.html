@@ -17,7 +17,11 @@
         {% endif %}
         </div>
         {{ comment['description']}}<br>
-        <i><small>created {{ comment['created'] }} by {{ comment['author']['username'] }}
-        </small></i><br>
+        <form action="/users" method="post">
+        <i><small>created {{ comment['created'] }} by
+          <input type="hidden" id="id" name="id" value="{{ comment['author_id'] }}">
+          <button class="link" type="submit" value="Submit"">{{ comment['author']['username'] }}</button>
+
+        </small></i></form><br><br>
 </div>
 {% endblock %}

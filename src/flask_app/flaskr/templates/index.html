@@ -12,12 +12,12 @@
 
           <h3><a href='/post/{{ post['id'] }}'>{{ post['title'] }}</a></h3><br>
           {{ post['description']}}<br>
-          <i><small>created {{ post['created'] }} by
-            <form action="/users" method="post">
+          <form action="/users" method="post">
+            <i><small>created {{ post['created'] }} by
               <input type="hidden" id="id" name="id" value="{{ post['author_id'] }}">
-              <button type="submit" value="Submit"">{{ post['author']['username'] }}</button>
-            </form>
-          </small></i><br>
+              <button class="link" type="submit" value="Submit"">{{ post['author']['username'] }}</button>
+            </small></i>
+          </form><br>
           {% if post['edited'] %}
             edited<br>
           {% endif %}
