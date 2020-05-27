@@ -21,8 +21,3 @@ def show_posts_by_category():
     category = request.form['category']
     posts = db_post_helper.get_posts_by_category(category)
     return render_template("index.html", posts=posts)
-
-
-@bp.route('/test', methods=["GET"])
-def error404():
-    return render_template("errors/404.html")

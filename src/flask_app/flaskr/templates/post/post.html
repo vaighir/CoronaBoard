@@ -49,7 +49,7 @@
           <form action="/users" method="post">
           <i><small>created {{ comment['created'] }} by
             <input type="hidden" id="id" name="id" value="{{ comment['author_id'] }}">
-            <button class="link" type="submit" value="Submit"">{{ comment['author']['username'] }}</button>
+            <button class="btn-link" type="submit" value="Submit"">{{ comment['author']['username'] }}</button>
 
           </small></i></form><br>
         {% endfor %}

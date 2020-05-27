@@ -36,4 +36,7 @@ def create_app(test_config=None):
     app.register_blueprint(comment_blueprint.bp)
     app.register_blueprint(auth.bp)
 
+    from . import http_error_handlers
+    app.register_error_handler(404, http_error_handlers.page_not_found)
+
     return app
