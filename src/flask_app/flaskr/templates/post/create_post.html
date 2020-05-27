@@ -11,7 +11,7 @@
     <input name="title" id="title" required>
     <br>
     <label for="category">Category</label><br>
-    <select id="category" name="category">
+    <select class="form-control" id="category" name="category">
       <option selected disabled hidden style='display: none' value=''></option>
       <option value="groceries">Groceries</option>
       <option value="dogs">Dog walking</option>
@@ -21,7 +21,7 @@
     <textarea id="description" name="description" rows="4" cols="50" required>
     </textarea>
     <br>
-    <input type="submit" value="Post">
+    <input class="btn-success" type="submit" value="Post">
   </form>
 </div>
 {% endblock %}

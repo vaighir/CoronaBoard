@@ -8,7 +8,7 @@
 <p>Are you sure you want to delete the comment?</p>
 <form method="post">
   <input type="hidden" id="delete_id" name="delete_id" value="{{ comment['id'] }}">
-  <button type="submit" value="Submit"">Yes, delete the comment</button>
+  <button class="btn-danger" type="submit" value="Submit"">Yes, delete the comment</button>
 </form>
-<a href="{{ url_for('index.index') }}"><button>Cancel</button></a>
+<a href="{{ url_for('index.index') }}"><button class="btn-success">Cancel</button></a>
 {% endblock %}

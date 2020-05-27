@@ -11,7 +11,7 @@
         {% if delete_rights %}
         <form method="post">
           <input type="hidden" id="delete_id" name="delete_id" value="{{ comment['id'] }}">
-          <button type="submit" value="Submit"">Delete</button>
+          <button class="btn-danger" type="submit" value="Submit"">Delete</button>
         </form>
         <br>
         {% endif %}

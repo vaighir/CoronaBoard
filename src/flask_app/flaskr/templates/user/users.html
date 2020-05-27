@@ -11,7 +11,7 @@
     <td>{{ user['username'] }}</td>
     <td> <form method="post">
       <input type="hidden" id="id" name="id" value="{{ user['id'] }}">
-      <button type="submit" value="Submit"">See user's profile</button>
+      <button class="btn-success" type="submit" value="Submit"">See {{ user['username'] }}'s profile</button>
     </form></td>
     </tr>
   {% endfor %}

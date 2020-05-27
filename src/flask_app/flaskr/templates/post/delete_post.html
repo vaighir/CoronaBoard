@@ -8,7 +8,7 @@
 <p>Are you sure you want to delete {{ post['title'] }}?</p>
 <form method="post">
   <input type="hidden" id="delete_id" name="delete_id" value="{{ post['id'] }}">
-  <button type="submit" value="Submit"">Yes, delete {{ post['title'] }}</button>
+  <button class="btn-danger" type="submit" value="Submit"">Yes, delete {{ post['title'] }}</button>
 </form>
-<a href="{{ url_for('index.index') }}"><button>Cancel</button></a>
+<a href="{{ url_for('index.index') }}"><button class="btn-success">Cancel</button></a>
 {% endblock %}
