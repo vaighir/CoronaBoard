@@ -32,6 +32,21 @@ def get_posts():
     return posts
 
 
+def get_posts_by_category(category):
+    mydb, cursor = db_connector.connect()
+    query = """SELECT * FROM post where category = %s"""
+    cursor.execute(query, (category,))
+    posts = []
+    mysql_response = cursor.fetchone()
+    while mysql_response:
+        p = parse_mysql_response(mysql_response)
+        posts.append(p)
+        mysql_response = cursor.fetchone()
+    cursor.close()
+    mydb.close()
+    return posts
+
+
 def get_post_by_id(post_id):
     mydb, cursor = db_connector.connect()
     query = """SELECT * FROM post where id = %s"""

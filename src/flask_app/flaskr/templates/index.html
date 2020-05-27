@@ -6,6 +6,15 @@
 
 {% block content %}
 <div class="container">
+  <form action="/posts" method="post">
+    <label for="category">Show only</label>
+    <select id="category" name="category">
+      <option selected disabled hidden style='display: none' value=''></option>
+      <option value="groceries">Posts about groceries</option>
+      <option value="dogs">Posts about dog walking</option>
+    </select>
+    <input type="submit" value="Select">
+  </form>
   <div class="row">
     {% for post in posts %}
       <div class="col-sm-4">
