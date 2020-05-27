@@ -57,11 +57,16 @@ def logout():
     return redirect(url_for('index.index'))
 
 
-def login_required():
-    if not g.user:
-        error = "You have to log in"
-        flash(error)
-        return redirect(url_for('index.index'))
-    else:
-        logged_user_id = g.user.id
-        return logged_user_id
+def login_required(view):
+    """View decorator that redirects anonymous users to the login page."""
+
+    @functools.wraps(view)
+    def wrapped_view(**kwargs):
+        if g.user is None:
+            error = "You have to log in"
+            flash(error)
+            return redirect(url_for("index.index"))
+
+        return view(**kwargs)
+
+    return wrapped_view

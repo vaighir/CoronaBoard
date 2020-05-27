@@ -14,9 +14,10 @@ bp = Blueprint('post_blueprint', __name__, url_prefix='/post')
 
 
 @bp.route('/<int:post_id>', methods=('GET', 'POST'))
+@auth.login_required
 def show_post(post_id):
 
-    logged_user_id = auth.login_required()
+    logged_user_id = g.user.id
 
     if request.method == 'POST':
         post_to_delete = int(request.form['delete_id'])
@@ -41,9 +42,10 @@ def show_post(post_id):
 
 
 @bp.route('/create', methods=('GET', 'POST'))
+@auth.login_required
 def create():
 
-    logged_user_id = auth.login_required()
+    logged_user_id = g.user.id
 
     if request.method == 'POST':
         title = request.form['title']
@@ -81,9 +83,10 @@ def create():
 
 
 @bp.route('/edit', methods=('GET', 'POST'))
+@auth.login_required
 def edit():
 
-    logged_user_id = auth.login_required()
+    logged_user_id = g.user.id
 
     p = db_post_helper.get_post_by_id(session.get('post_to_edit'))
 
@@ -117,9 +120,8 @@ def edit():
 
 
 @bp.route('/delete', methods=('GET', 'POST'))
+@auth.login_required
 def delete():
-
-    auth.login_required()
 
     if g.user.role != "admin":
         error = "Only the admin can delete posts"

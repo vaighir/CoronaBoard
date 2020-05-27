@@ -13,9 +13,10 @@ bp = Blueprint('comment_blueprint', __name__, url_prefix='/comment')
 
 
 @bp.route('/show/<int:comment_id>', methods=('GET', 'POST'))
+@auth.login_required
 def show_post(comment_id):
 
-    logged_user_id = auth.login_required()
+    logged_user_id = g.user.id
 
     if request.method == 'POST':
         session['comment_to_delete'] = request.form['delete_id']
@@ -30,9 +31,10 @@ def show_post(comment_id):
 
 
 @bp.route('/<int:post_id>/create', methods=('GET', 'POST'))
+@auth.login_required
 def create(post_id):
 
-    logged_user_id = auth.login_required()
+    logged_user_id = g.user.id
 
     if request.method == 'POST':
         description = request.form['description']
@@ -62,9 +64,8 @@ def create(post_id):
 
 
 @bp.route('/delete', methods=('GET', 'POST'))
+@auth.login_required
 def delete():
-
-    auth.login_required()
 
     if g.user.role != "admin":
         error = "Only the admin can delete posts"
