@@ -24,10 +24,14 @@ nav ul li a, nav ul li span, {
   height:100px;
 }
 
-.flash{
-  color: #c91100;
+.link {
+  background: none!important;
+  border: none;
+  padding: 0!important;
+  color: #04E824;
+  font-style: italic;
 }
 
-.btn-link{
-  color: #04E824;
+.flash{
+  color: #c91100;
 }
