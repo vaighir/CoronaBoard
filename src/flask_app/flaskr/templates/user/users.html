@@ -1,19 +1,29 @@
 {% extends 'base.html' %}
 
 {% block header %}
+<div class="container">
   <h1>{% block title %}Users{% endblock %}</h1>
+</div>
 {% endblock %}
 
 {% block content %}
-  <table>
+<div class="container">
+  <table class="table normal-text">
+    <tr>
+      <th>id</th>
+      <th>username</th>
+      <th>email</th>
+    </tr>
   {% for user in users %}
     <tr>
-    <td>{{ user['username'] }}</td>
+    <td>{{ user['id'] }}.&nbsp;</td>
     <td> <form method="post">
       <input type="hidden" id="id" name="id" value="{{ user['id'] }}">
-      <button class="btn-success" type="submit" value="Submit"">See {{ user['username'] }}'s profile</button>
+      <big><button class="link" type="submit" value="Submit"">{{ user['username'] }}</button></big>
     </form></td>
+    <td>{{ user['email'] }}</td>
     </tr>
   {% endfor %}
   </table>
+</div>
 {% endblock %}

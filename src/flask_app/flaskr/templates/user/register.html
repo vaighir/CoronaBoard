@@ -2,20 +2,34 @@
 
 {% block header %}
 <script type=text/javascript src="{{ url_for('static', filename='scripts/auth.js') }}"></script>
+<div class=container>
   <h1>{% block title %}Register{% endblock %}</h1>
+</div>
 {% endblock %}
 
 {% block content %}
+<div class=container>
   <p id="error_box"></p>
   <form id="register" method="post">
-    <label for="username">Username</label>
-    <input name="username" id="username" required>
-    <label for="password">Password</label>
-    <input type="password" name="password" id="password" required>
-    <label for="password2">Repeat password</label>
-    <input type="password" name="password2" id="password2" required>
-    <label for="email">Email</label>
-    <input type="email" name="email" id="email" required>
+
+    <div class="form-group">
+      <label for="username">Username</label><br>
+      <input name="username" id="username" required>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label><br>
+      <input type="password" name="password" id="password" required><br><br>
+      <label for="password2">Repeat password</label><br>
+      <input type="password" name="password2" id="password2" required>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label><br>
+      <input type="email" name="email" id="email" required>
+    </div>
     <input class="btn-success" type="submit" value="Register">
+    
   </form>
+</div>
 {% endblock %}

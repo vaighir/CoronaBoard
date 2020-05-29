@@ -60,3 +60,7 @@ nav ul li a, nav ul li span, {
 footer{
   border-top: 1px solid black;
 }
+
+.normal-text{
+  color: #3E8D14;
+}
