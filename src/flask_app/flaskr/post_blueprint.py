@@ -8,6 +8,7 @@ from . import db_comment_helper, comment
 from . import auth
 from mysql.connector import Error as mysql_error
 import datetime
+from werkzeug import exceptions as request_error
 
 
 bp = Blueprint('post_blueprint', __name__, url_prefix='/post')
@@ -48,16 +49,22 @@ def create():
     logged_user_id = g.user.id
 
     if request.method == 'POST':
-        title = request.form['title']
-        category = request.form['category']
-        description = request.form['description']
         error = None
 
-        if not title:
+        try:
+            title = request.form['title']
+        except request_error.BadRequestKeyError:
             error = 'Title is required.'
-        elif not category:
+
+        try:
+            category = request.form['category']
+        except request_error.BadRequestKeyError:
             error = 'Category is required.'
-        elif not description:
+
+        try:
+            description = request.form['description']
+            description = description.replace('\n', '<br>')
+        except request_error.BadRequestKeyError:
             error = 'Description is required'
 
         if error is None:
@@ -71,9 +78,9 @@ def create():
 
             try:
                 db_post_helper.insert_post(p)
-                return redirect(url_for('index.index'))
                 message = "Post created"
                 flash(message)
+                return redirect(url_for('index.index'))
             except mysql_error:
                 error = "Oops, a database error occured :("
 

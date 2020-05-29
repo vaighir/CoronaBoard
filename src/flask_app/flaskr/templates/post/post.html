@@ -28,7 +28,7 @@
         {% if post['category']=='groceries' %}Groceries{% endif %}
         {% if post['category']=='dogs' %}Dog walking{% endif %}
         <br>
-        {{ post['description']}}<br>
+        {{ post['description'] | safe }}<br>
         <form action="/users" method="post">
         <i><small>created {{ post['created'] }} by
 

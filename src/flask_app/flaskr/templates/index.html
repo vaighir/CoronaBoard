@@ -20,11 +20,11 @@
       <div class="col-sm-4">
 
           <h3><a href='/post/{{ post['id'] }}'>{{ post['title'] }}</a></h3>
-          {{ post['description']}}<br>
+          {{ post['description'] | safe }}<br>
           <form action="/users" method="post">
             <i><small>created {{ post['created'] }} by
               <input type="hidden" id="id" name="id" value="{{ post['author_id'] }}">
-              <button class="link" type="submit" value="Submit"">{{ post['author']['username'] }}</button>
+              <button class="btn btn-link" type="submit" value="Submit"">{{ post['author']['username'] }}</button>
             </small></i>
           </form><br>
           {% if post['edited'] %}
