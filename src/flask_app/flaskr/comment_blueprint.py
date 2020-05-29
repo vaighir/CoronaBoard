@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
+import datetime
 from flask import (
     request, Blueprint, render_template, session, redirect,
     url_for, flash, g
     )
+from mysql.connector import Error as mysql_error
+from werkzeug import exceptions as request_error
 from . import db_comment_helper, comment
 from. import auth
-from mysql.connector import Error as mysql_error
-import datetime
 
 
 bp = Blueprint('comment_blueprint', __name__, url_prefix='/comment')
@@ -14,7 +15,7 @@ bp = Blueprint('comment_blueprint', __name__, url_prefix='/comment')
 
 @bp.route('/show/<int:comment_id>', methods=('GET', 'POST'))
 @auth.login_required
-def show_post(comment_id):
+def show_comment(comment_id):
 
     logged_user_id = g.user.id
 
@@ -37,11 +38,17 @@ def create(post_id):
     logged_user_id = g.user.id
 
     if request.method == 'POST':
-        description = request.form['description']
         error = None
 
-        if not description:
+        try:
+            description = request.form['description']
+            description = description.replace('\n', '<br>')
+            description = description.strip()
+        except request_error.BadRequestKeyError:
             error = 'Description is required'
+
+        if not description:
+            error = 'Description cannot be only whitespace'
 
         if error is None:
             c = comment.Comment()
@@ -52,9 +59,9 @@ def create(post_id):
 
             try:
                 db_comment_helper.insert_comment(c)
-                return redirect(url_for('index.index'))
                 message = "Comment created"
                 flash(message)
+                return redirect(url_for('index.index'))
             except mysql_error:
                 error = "Oops, a database error occured :("
 

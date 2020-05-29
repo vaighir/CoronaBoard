@@ -11,11 +11,9 @@
   <form method="post">
     <div class="form-group">
       <label for="description">New description</label><br>
-      <textarea class="form-control" id="description" name="description" required>
-        {{ post['description'] }}
-      </textarea>
+      <textarea class="form-control" id="description" name="description" required>{{ post['description'] }}</textarea>
     </div>
-    <input class="btn-success" type="submit" value="Post">
+    <input class="btn-success" type="submit" value="Save changes">
   </form>
 </div>
 {% endblock %}

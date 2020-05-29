@@ -1,27 +1,29 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  {% block title %}{% endblock %}
+  {% block title %}
+  <div class="container">
+    <h1>Comment to {{ comment['post_title'] }}</h1>
+  </div>
+  {% endblock %}
 {% endblock %}
 
 {% block content %}
 <div class="container">
-        <h3>Comment to {{ comment['post_title'] }}</h3>
-        <div class="row">
-        {% if delete_rights %}
-        <form method="post">
-          <input type="hidden" id="delete_id" name="delete_id" value="{{ comment['id'] }}">
-          <button class="btn-danger" type="submit" value="Submit"">Delete</button>
-        </form>
-        <br>
-        {% endif %}
-        </div>
-        {{ comment['description']}}<br>
-        <form action="/users" method="post">
-        <i><small>created {{ comment['created'] }} by
-          <input type="hidden" id="id" name="id" value="{{ comment['author_id'] }}">
-          <button class="link" type="submit" value="Submit"">{{ comment['author']['username'] }}</button>
-
-        </small></i></form><br><br>
+  <div class="row">
+  {% if delete_rights %}
+  <form method="post">
+    <input type="hidden" id="delete_id" name="delete_id" value="{{ comment['id'] }}">
+    <button class="btn-danger" type="submit" value="Submit"">Delete</button>
+  </form>
+  <br>
+  {% endif %}
+  </div>
+  {{ comment['description']}}<br>
+  <form action="/users" method="post">
+    <i><small>created {{ comment['created'] }} by</small></i>
+    <input type="hidden" id="id" name="id" value="{{ comment['author_id'] }}">
+    <button class="link" type="submit" value="Submit"">{{ comment['author']['username'] }}</button>
+  </form>
 </div>
 {% endblock %}

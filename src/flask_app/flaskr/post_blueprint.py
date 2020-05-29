@@ -64,6 +64,7 @@ def create():
         try:
             description = request.form['description']
             description = description.replace('\n', '<br>')
+            description = description.strip()
         except request_error.BadRequestKeyError:
             error = 'Description is required'
 
@@ -113,6 +114,7 @@ def edit():
         try:
             new_description = request.form['description']
             new_description = new_description.replace('\n', '<br>')
+            new_description = new_description.strip()
         except request_error.BadRequestKeyError:
             error = 'Description cannot be empty'
 
