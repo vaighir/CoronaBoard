@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
+import datetime
 from flask import (
     request, Blueprint, render_template, session, redirect,
     url_for, flash, g
     )
-from . import db_post_helper, post
-from . import db_comment_helper, comment
-from . import auth
 from mysql.connector import Error as mysql_error
-import datetime
 from werkzeug import exceptions as request_error
+from . import db_post_helper, post
+from . import db_comment_helper
+from . import auth
 
 
 bp = Blueprint('post_blueprint', __name__, url_prefix='/post')
@@ -96,17 +96,25 @@ def edit():
     logged_user_id = g.user.id
 
     p = db_post_helper.get_post_by_id(session.get('post_to_edit'))
+    old_description = p.description
+    old_description = old_description.replace('<br>', '\n')
+    p.description = old_description
 
     if logged_user_id != 1 and logged_user_id != p.author_id:
-        error = "You do not have rights to edit this user"
+        error = "You do not have rights to edit this post"
         flash(error)
-        session.pop('user_to_edit')
+        session.pop('post_to_edit')
         return redirect(url_for('index.index'))
 
     if request.method == 'POST':
-        new_description = request.form['description']
         error = None
         message = None
+
+        try:
+            new_description = request.form['description']
+            new_description = new_description.replace('\n', '<br>')
+        except request_error.BadRequestKeyError:
+            error = 'Description cannot be empty'
 
         p.description = new_description
 
