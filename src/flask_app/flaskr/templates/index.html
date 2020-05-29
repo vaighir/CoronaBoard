@@ -17,18 +17,23 @@
   </form>
   <div class="row">
     {% for post in posts %}
-      <div class="col-sm-4">
-
-          <h3><a href='/post/{{ post['id'] }}'>{{ post['title'] }}</a></h3>
-          {{ post['description'] | safe }}<br>
-          <form action="/users" method="post">
-            <i><small>created {{ post['created'] }} by
+      <div class="col-sm-4 single-post">
+        <div class="paper">
+          <h3>
+            <a href='/post/{{ post['id'] }}'>{{ post['title'] }}</a>
+            <img id="pin" src="{{ url_for('static', filename='images/drawing-pin.png') }}">
+          </h3>
+          {{ post['description'] | safe }}
+        </div>
+          <div class="row">
+            <i><small>created {{ post['created'] }} by</small></i>&nbsp;
+            <form action="/users" method="post">
               <input type="hidden" id="id" name="id" value="{{ post['author_id'] }}">
               <button class="link" type="submit" value="Submit"">{{ post['author']['username'] }}</button>
-            </small></i>
-          </form><br>
+            </form>
+          </div>
           {% if post['edited'] %}
-            edited<br>
+            edited
           {% endif %}
 
       </div>
