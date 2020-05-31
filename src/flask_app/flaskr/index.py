@@ -3,6 +3,7 @@ from flask import (
     request, Blueprint, render_template, session, redirect,
     url_for, flash, g
     )
+from werkzeug import exceptions as request_error
 from . import db_post_helper
 
 bp = Blueprint('index', __name__, url_prefix='/')
@@ -18,6 +19,18 @@ def index():
 @bp.route('/posts', methods=('GET', 'POST'))
 def show_posts_by_category():
 
-    category = request.form['category']
-    posts = db_post_helper.get_posts_by_category(category)
+    error = None
+
+    try:
+        category = request.form['category']
+    except request_error.BadRequestKeyError:
+        error = 'Category is required.'
+
+    if error is None:
+
+        posts = db_post_helper.get_posts_by_category(category)
+        return render_template("index.html", posts=posts)
+
+    posts = db_post_helper.get_posts()
+    flash(error)
     return render_template("index.html", posts=posts)
