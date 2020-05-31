@@ -53,8 +53,12 @@ def create():
 
         try:
             title = request.form['title']
+            title = title.strip()
         except request_error.BadRequestKeyError:
             error = 'Title is required.'
+
+        if not title:
+            error = "Title cannot be empty"
 
         try:
             category = request.form['category']
@@ -67,6 +71,9 @@ def create():
             description = description.strip()
         except request_error.BadRequestKeyError:
             error = 'Description is required'
+
+        if not description:
+            error = "Description cannot be empty"
 
         if error is None:
             p = post.Post()

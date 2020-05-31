@@ -48,7 +48,7 @@ def create(post_id):
             error = 'Description is required'
 
         if not description:
-            error = 'Description cannot be only whitespace'
+            error = 'Commet cannot be empty'
 
         if error is None:
             c = comment.Comment()

@@ -52,7 +52,8 @@ def insert_comment(comment):
                VALUES (%s,%s,%s,%s)"""
     cursor.execute(
                 query,
-                (comment.author_id, comment.post_id, comment.description, comment.created.strftime('%Y-%m-%d %H:%M:%S')))
+                (comment.author_id, comment.post_id, comment.description,
+                 comment.created.strftime('%Y-%m-%d %H:%M:%S')))
     mydb.commit()
     cursor.close()
     mydb.close()
