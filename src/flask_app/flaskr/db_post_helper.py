@@ -19,7 +19,7 @@ def parse_mysql_response(mysql_response):
 
 def get_posts():
     mydb, cursor = db_connector.connect()
-    query = """SELECT * FROM post"""
+    query = """SELECT * FROM post ORDER BY created DESC"""
     cursor.execute(query)
     posts = []
     mysql_response = cursor.fetchone()
@@ -34,7 +34,7 @@ def get_posts():
 
 def get_posts_by_category(category):
     mydb, cursor = db_connector.connect()
-    query = """SELECT * FROM post where category = %s"""
+    query = """SELECT * FROM post where category = %s  ORDER BY created DESC"""
     cursor.execute(query, (category,))
     posts = []
     mysql_response = cursor.fetchone()
@@ -62,7 +62,7 @@ def get_post_by_id(post_id):
 
 def get_posts_by_user_id(user_id):
     mydb, cursor = db_connector.connect()
-    query = """SELECT * FROM post WHERE user_id = %s"""
+    query = """SELECT * FROM post WHERE user_id = %s  ORDER BY created DESC"""
     cursor.execute(query, (user_id,))
     posts = []
     mysql_response = cursor.fetchone()

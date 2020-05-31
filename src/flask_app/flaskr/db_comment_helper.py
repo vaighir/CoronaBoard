@@ -32,7 +32,8 @@ def get_comment_by_id(comment_id):
 
 def get_comments_by_post_id(post_id):
     mydb, cursor = db_connector.connect()
-    query = """SELECT * FROM comment WHERE post_id = %s"""
+    query = """SELECT * FROM comment WHERE post_id = %s
+               ORDER BY created DESC"""
     cursor.execute(query, (post_id,))
     comments = []
     mysql_response = cursor.fetchone()
