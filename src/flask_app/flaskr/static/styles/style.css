@@ -45,7 +45,7 @@ nav ul li a, nav ul li span, {
 }
 
 .single-post{
-  border-style: outset;
+  border-style: groove;
   border-color: #064700;
 }
 
@@ -63,4 +63,12 @@ footer{
 
 .normal-text{
   color: #3E8D14;
+}
+
+.pagination a:link{
+  color: #04E824;
+}
+
+.error-number{
+  font-size: 500%;
 }
