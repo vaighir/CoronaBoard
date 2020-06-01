@@ -7,8 +7,6 @@ def create_app(test_config=None):
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
-        # FIXME add the secret key created for the image?
-        # ENV_NAME=os.environ['ENV_NAME'],
         SECRET_KEY='dev',
     )
 

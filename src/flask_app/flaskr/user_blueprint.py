@@ -5,7 +5,7 @@ from flask import (
     )
 from werkzeug.security import check_password_hash, generate_password_hash
 from . import db_user_helper, user
-from . import db_post_helper, post
+from . import db_post_helper
 from . import auth
 from mysql.connector import Error as mysql_error
 

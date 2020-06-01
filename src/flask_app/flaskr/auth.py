@@ -9,8 +9,6 @@ from flask import request
 from flask import session
 from flask import url_for
 from werkzeug.security import check_password_hash
-from werkzeug.security import generate_password_hash
-
 from. import db_user_helper
 
 
@@ -37,9 +35,9 @@ def login():
         user = db_user_helper.get_user_by_username(username)
 
         if user is None:
-            error = 'Incorrect username.'
+            error = 'Incorrect username or password.'
         elif not check_password_hash(user.password, password):
-            error = 'Incorrect password.'
+            error = 'Incorrect username or password.'
 
         if error is None:
             session.clear()
@@ -58,6 +56,7 @@ def logout():
 
 
 def login_required(view):
+    """This function is taken directly from Flask tutorial"""
     """View decorator that redirects anonymous users to the login page."""
 
     @functools.wraps(view)

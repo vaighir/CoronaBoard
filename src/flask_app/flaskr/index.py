@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 from flask import (
-    request, Blueprint, render_template, session, redirect,
-    url_for, flash, g
+    request, Blueprint, render_template, flash
     )
 from flask_paginate import Pagination, get_page_args
 from werkzeug import exceptions as request_error
