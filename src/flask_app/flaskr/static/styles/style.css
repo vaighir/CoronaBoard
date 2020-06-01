@@ -72,3 +72,8 @@ footer{
 .error-number{
   font-size: 500%;
 }
+
+.category-picture{
+  width:20px;
+  height:20px;
+}

@@ -21,6 +21,11 @@
         <h3>
           <a href='/post/{{ post['id'] }}'>{{ post['title'] }}</a>
         </h3>
+        {% if post['category']=='dogs' %}
+            <img class="category-picture" src="{{ url_for('static', filename='images/paw.png') }}"> Dog walking
+        {% elif post['category']=='groceries' %}
+            <img class="category-picture" src="{{ url_for('static', filename='images/groceries.png') }}"> Groceries
+        {% endif %}
         <div class="paper">
           <h3>
             {{ post['title'] }}
