@@ -43,5 +43,6 @@
     {% endfor %}
   </div>
   {{ pagination.links }}
+  <a href="{{ url_for('covid_blueprint.show_stats') }}">See current covid info</a>
 </div>
 {% endblock %}

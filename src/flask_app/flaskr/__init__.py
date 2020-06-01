@@ -30,11 +30,13 @@ def create_app(test_config=None):
     from . import post_blueprint
     from . import comment_blueprint
     from . import auth
+    from . import covid_blueprint
     app.register_blueprint(index.bp)
     app.register_blueprint(user_blueprint.bp)
     app.register_blueprint(post_blueprint.bp)
     app.register_blueprint(comment_blueprint.bp)
     app.register_blueprint(auth.bp)
+    app.register_blueprint(covid_blueprint.bp)
 
     from . import http_error_handlers
     app.register_error_handler(404, http_error_handlers.page_not_found)

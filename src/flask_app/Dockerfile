@@ -5,7 +5,7 @@ COPY . /app
 WORKDIR $WORKDIR
 
 RUN apk update && apk upgrade && \
-    apk add bash bash-completion python3 python3-dev vim && \
+    apk add bash bash-completion curl python3 python3-dev vim && \
     pip3 install --upgrade pip && \
     pip3 install -r requirements.txt && \
     pip3 install . && \

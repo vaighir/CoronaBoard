@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  {% block title %}<h1>Global stats</h1>{% endblock %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <table class="table normal-text">
+    <tr>
+      <td>New confirmed cases globally</td>
+      <td>{{ global_cases.NewConfirmed }}</td>
+    </tr>
+    <tr>
+      <td>Total confirmed cases globally</td>
+      <td>{{ global_cases.TotalConfirmed }}</td>
+    </tr>
+    <tr>
+      <td>New deaths globally</td>
+      <td>{{ global_cases.NewDeaths }}</td>
+    </tr>
+    <tr>
+      <td>Total deaths globally</td>
+      <td>{{ global_cases.TotalDeaths }}</td>
+    </tr>
+    <tr>
+      <td>New recovered globally</td>
+      <td>{{ global_cases.NewRecovered }}</td>
+    </tr>
+    <tr>
+      <td>Total recovered globally</td>
+      <td>{{ global_cases.TotalRecovered }}</td>
+    </tr>
+  </table>
+</div>
+{% endblock %}
