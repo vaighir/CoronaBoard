@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from flask import (
-    request, Blueprint, render_template, flash
+    request, Blueprint, render_template, flash, redirect, url_for
     )
 from flask_paginate import Pagination, get_page_args
 from werkzeug import exceptions as request_error
@@ -43,8 +43,22 @@ def show_posts_by_category():
     if error is None:
 
         posts = db_post_helper.get_posts_by_category(category)
-        return render_template("index.html", posts=posts)
 
-    posts = db_post_helper.get_posts()
+        page, per_page, offset = get_page_args(page_parameter='page',
+                                               per_page_parameter='per_page')
+        total = len(posts)
+        pagination_posts = posts[offset: 0 + 12]
+
+        pagination = Pagination(page=page, per_page=per_page, total=total,
+                                css_framework='bootstrap4')
+
+        return render_template('index.html',
+                               posts=pagination_posts,
+                               page=page,
+                               per_page=per_page,
+                               pagination=pagination,
+                               alignment="center",
+                               )
+
     flash(error)
-    return render_template("index.html", posts=posts)
+    return redirect(url_for('index.index'))
