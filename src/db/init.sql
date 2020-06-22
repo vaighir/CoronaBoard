@@ -42,7 +42,7 @@ CREATE TABLE comment (
 );
 
 INSERT INTO user (username, email, role, password)
-VALUES ("admin@admin.de", "admin@admin.de", "admin", "pbkdf2:sha256:150000$2bfdFpEs$4799a07a2145bb6edd197be29c05ca140134a10a88d33cd12199534fe874dbe1");
+VALUES ("admin", "admin@sample.com", "admin", "pbkdf2:sha256:150000$2bfdFpEs$4799a07a2145bb6edd197be29c05ca140134a10a88d33cd12199534fe874dbe1");
 
 INSERT INTO user (username, email, role, password)
-VALUES ("user@user.de", "user@user.de", "user", "pbkdf2:sha256:150000$2bfdFpEs$4799a07a2145bb6edd197be29c05ca140134a10a88d33cd12199534fe874dbe1");
+VALUES ("user1", "user1@sample.com", "user", "pbkdf2:sha256:150000$2bfdFpEs$4799a07a2145bb6edd197be29c05ca140134a10a88d33cd12199534fe874dbe1");
